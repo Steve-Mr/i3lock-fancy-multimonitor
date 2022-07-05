@@ -12,7 +12,7 @@ PARAMS=""
 OUTPUT_IMAGE="/tmp/i3lock.png"
 DISPLAY_TEXT=true
 PIXELATE=false
-BLURTYPE="1x1"
+BLURTYPE="10x10"
 
 # Read user input
 POSITIONAL=()
@@ -90,7 +90,7 @@ done <<<"`xrandr`"
 
 #Execute ImageMagick:
 if $PIXELATE ; then
-  PARAMS="'$OUTPUT_IMAGE' '-scale' '10%' '-scale' '1000%' $PARAMS '$OUTPUT_IMAGE'"
+  PARAMS="'$OUTPUT_IMAGE' '-scale' '100%' '-scale' '10000%' $PARAMS '$OUTPUT_IMAGE'"
 else
   PARAMS="'$OUTPUT_IMAGE' '-level' '0%,100%,0.6' '-blur' '$BLURTYPE' $PARAMS '$OUTPUT_IMAGE'"
 fi
@@ -99,6 +99,8 @@ eval convert $PARAMS
 
 #Lock the screen:
 i3lock -i $OUTPUT_IMAGE -t
+
+ systemctl suspend
 
 #Remove the generated image:
 rm $OUTPUT_IMAGE
